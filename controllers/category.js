@@ -20,6 +20,18 @@ const getCategory = async (req, res, next) => {
   })
 }
 
+const updateCategory = async (req, res, next) => {
+  const category = await Category.findByIdAndUpdate(
+    req.params.id,
+    { ...req.body },
+    { new: true }
+  )
+
+  return res.status(201).json({
+    category
+  })
+}
+
 const deleteCategory = async (req, res, next) => {
   await Category.findByIdAndRemove(req.params.id)
   return res.status(200).json({
@@ -32,5 +44,6 @@ module.exports = {
   getAllCategories,
   newCategory,
   getCategory,
+  updateCategory,
   deleteCategory
 }
