@@ -8,10 +8,9 @@ const getAllProducts = async (req, res, next) => {
 }
 
 const newProduct = async (req, res, next) => {
-  const formProduct = {...req.body}
-  const newProduct = new Product(formProduct)
-  console.log(newProduct)
+  const newProduct = new Product(req.value.body)
   await newProduct.save()
+
   return res.status(201).json({
     product: newProduct
   })

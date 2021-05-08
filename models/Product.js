@@ -3,12 +3,10 @@ const Schema = mongoose.Schema
 
 const productShema = new Schema({
   name: {
-    type: String,
-    required: true
+    type: String
   },
   description: {
-    type: String,
-    required: true
+    type: String
   },
   richDescription: {
     type: String,
@@ -21,7 +19,7 @@ const productShema = new Schema({
   images: [{
     type: String
   }],
-  branch: {
+  brand: {
     type: String,
     default: ''
   },
@@ -30,9 +28,8 @@ const productShema = new Schema({
     default: 0
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
   },
   countInStock: {
     type: Number,

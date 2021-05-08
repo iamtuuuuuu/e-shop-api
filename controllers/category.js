@@ -6,7 +6,7 @@ const getAllCategories = async (req, res, next) => {
 }
 
 const newCategory = async (req, res, next) => {
-  const newCategory = new Category({ ...req.body })
+  const newCategory = new Category(req.value.body)
   await newCategory.save()
   return res.status(201).json({
     category: newCategory
@@ -14,7 +14,10 @@ const newCategory = async (req, res, next) => {
 }
 
 const getCategory = async (req, res, next) => {
-  const category = await Category.findById(req.params.id)
+  const {
+    categoryID
+  } = req.value.params
+  const category = await Category.findById(categoryID)
   return res.status(201).json({
     category
   })
