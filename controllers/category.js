@@ -9,7 +9,14 @@ const newCategory = async (req, res, next) => {
   const newCategory = new Category({ ...req.body })
   await newCategory.save()
   return res.status(201).json({
-    categoty: newCategory
+    category: newCategory
+  })
+}
+
+const getCategory = async (req, res, next) => {
+  const category = await Category.findById(req.params.id)
+  return res.status(201).json({
+    category
   })
 }
 
@@ -24,5 +31,6 @@ const deleteCategory = async (req, res, next) => {
 module.exports = {
   getAllCategories,
   newCategory,
+  getCategory,
   deleteCategory
 }
