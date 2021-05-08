@@ -12,7 +12,7 @@ const newProduct = async (req, res, next) => {
   const newProduct = new Product(formProduct)
   console.log(newProduct)
   await newProduct.save()
-  return res.status(200).json({
+  return res.status(201).json({
     product: newProduct
   })
 

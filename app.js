@@ -2,13 +2,15 @@ const express = require('express')
 const app = express()
 const logger = require('morgan')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const route = require('./routes')
 
 
 require('dotenv/config')
-
-
 const port = process.env.PORT || 3001
+
+app.use(cors())
+app.options('*', cors())
 
 // midderwares
 app.use(logger('tiny'))
