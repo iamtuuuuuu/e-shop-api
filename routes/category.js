@@ -2,7 +2,7 @@ const router = require('express-promise-router')()
 
 const categoryController = require('../controllers/category')
 const {
-  schema,
+  schemas,
   validateParam, 
   validateBody
 } = require('../helpers/routerHelper')
@@ -12,9 +12,9 @@ router.route('/')
   .post(categoryController.newCategory)
 
 router.route('/:id') 
-  .get(validateParam(schema.idSchema, 'categoryID'), categoryController.getCategory)
-  .put(validateParam(schema.idSchema, 'categoryID'), categoryController.updateCategory)
-  .delete(validateParam(schema.idSchema, 'categoryID'), categoryController.deleteCategory)
+  .get(validateParam(schemas.idSchema, 'categoryID'), categoryController.getCategory)
+  .put(validateParam(schemas.idSchema, 'categoryID'), categoryController.updateCategory)
+  .delete(validateParam(schemas.idSchema, 'categoryID'), categoryController.deleteCategory)
 
 module.exports = router
 
