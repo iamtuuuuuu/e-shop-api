@@ -50,14 +50,22 @@ const schemas = {
     description: Joi.string().min(10).required(),
     richDescription: Joi.string(),
     image: Joi.string(),
+    images: Joi.array().items(Joi.string()),
     brand: Joi.string(),
     price: Joi.number(),
-    rating: Joi.number(),
-    numReviews: Joi.number(),
-    isFeatured: Joi.boolean(),
     category: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
-    countInStock: Joi.number().integer().min(0).max(255).required()
-  }) 
+    rating: Joi.number(),
+    countInStock: Joi.number().integer().min(0).max(255).required(),
+    isFeatured: Joi.boolean(),
+    numReviews: Joi.number(),
+    dateCreate: Joi.date()
+  }).unknown(),
+  
+  newCategoryShema: Joi.object().keys({
+    name: Joi.string().min(6).required(),
+    icon: Joi.string(),
+    color: Joi.string().regex(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)
+  })
 }
 
 module.exports = {

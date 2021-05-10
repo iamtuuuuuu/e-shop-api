@@ -11,4 +11,8 @@ router.route('/')
   .get(productController.getAllProducts)
   .post( validateBody(schemas.newProductSchema), productController.newProduct)
 
+router.route('/:productID')  
+  .get( validateParam(schemas.idSchema, 'productID'), productController.getProduct)
+  .put( validateParam(schemas.idSchema, 'productID'), validateBody(schemas.newProductSchema), productController.updateProduct)
+
 module.exports = router  

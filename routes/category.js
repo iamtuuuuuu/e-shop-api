@@ -9,11 +9,11 @@ const {
 
 router.route('/')
   .get(categoryController.getAllCategories)
-  .post(categoryController.newCategory)
+  .post( validateBody(schemas.newCategoryShema), categoryController.newCategory)
 
-router.route('/:id') 
+router.route('/:categoryID') 
   .get(validateParam(schemas.idSchema, 'categoryID'), categoryController.getCategory)
-  .put(validateParam(schemas.idSchema, 'categoryID'), categoryController.updateCategory)
+  .put(validateParam(schemas.idSchema, 'categoryID'), validateBody(schemas.newCategoryShema), categoryController.updateCategory)
   .delete(validateParam(schemas.idSchema, 'categoryID'), categoryController.deleteCategory)
 
 module.exports = router

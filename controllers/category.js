@@ -24,9 +24,13 @@ const getCategory = async (req, res, next) => {
 }
 
 const updateCategory = async (req, res, next) => {
+  const {
+    categoryID
+  } = req.value.params
+
   const category = await Category.findByIdAndUpdate(
-    req.params.id,
-    { ...req.body },
+    categoryID,
+    { ...req.value.body },
     { new: true }
   )
 
