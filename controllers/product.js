@@ -72,11 +72,27 @@ const countProduct = async (req, res, next) => {
   })
 }
 
+const getFeatureProduct = async (req, res, next) => {
+  const {
+    count 
+  } = req.value.params
+  const featureProducts = await Product.find({isFeatured: true}).limit(+count)
+
+  if(!featureProducts) {
+    res.status(500).json({success: false})
+  }
+
+  return res.status(201).json({
+    featureProducts
+  })
+}
+
 module.exports = {
   getAllProducts,
   newProduct,
   getProduct,
   updateProduct,
   deleteProduct,
-  countProduct
+  countProduct,
+  getFeatureProduct
 }

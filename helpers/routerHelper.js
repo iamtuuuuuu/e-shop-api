@@ -44,6 +44,10 @@ const schemas = {
     param: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
   }),
 
+  number: Joi.object().keys({
+    param: Joi.number().required()
+  }),
+
   // validate body
   newProductSchema: Joi.object().keys({
     name: Joi.string().min(6).required(),

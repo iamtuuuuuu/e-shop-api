@@ -49,7 +49,7 @@ const productShema = new Schema({
   },
   isFeatured: {
     type: Boolean,
-    default: false
+    default: false // if true: should be show in home page
   },
   dateCreate: {
     type: Date,

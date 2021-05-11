@@ -18,4 +18,7 @@ router.route('/:productID')
 
 router.route('/get/count')
   .get(productController.countProduct)
+
+router.route('/get/featured/:count')  
+  .get( validateParam(schemas.number, 'count') , productController.getFeatureProduct)
 module.exports = router  
