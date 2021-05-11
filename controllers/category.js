@@ -40,7 +40,10 @@ const updateCategory = async (req, res, next) => {
 }
 
 const deleteCategory = async (req, res, next) => {
-  await Category.findByIdAndRemove(req.params.id)
+  const {
+    categoryID
+  } = req.value.params
+  await Category.findByIdAndRemove(categoryID)
   return res.status(200).json({
     success: true,
     message: 'the category is deleted'

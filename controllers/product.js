@@ -53,9 +53,30 @@ const updateProduct = async (req, res, next) => {
   })
 }
 
+const deleteProduct = async (req, res, next) => {
+  const {
+    productID
+  } = req.value.params
+  await Product.findByIdAndRemove(productID)
+  return res.status(200).json({
+    success: true,
+    message: 'the product is deleted'
+  })
+}
+
+const countProduct = async (req, res, next) => {
+  const productCount = await Product.countDocuments((count) => count)
+
+  return res.status(201).json({
+    productCount
+  })
+}
+
 module.exports = {
   getAllProducts,
   newProduct,
   getProduct,
-  updateProduct
+  updateProduct,
+  deleteProduct,
+  countProduct
 }

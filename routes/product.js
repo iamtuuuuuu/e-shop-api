@@ -14,5 +14,8 @@ router.route('/')
 router.route('/:productID')  
   .get( validateParam(schemas.idSchema, 'productID'), productController.getProduct)
   .put( validateParam(schemas.idSchema, 'productID'), validateBody(schemas.newProductSchema), productController.updateProduct)
+  .delete( validateParam(schemas.idSchema, 'productID'), productController.deleteProduct)
 
+router.route('/get/count')
+  .get(productController.countProduct)
 module.exports = router  
