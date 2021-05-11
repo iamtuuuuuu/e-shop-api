@@ -1,8 +1,13 @@
 const Product = require('../models/Product')
 const Category = require('../models/Category')
 
-const getAllProducts = async (req, res, next) => {
-  const products = await Product.find({}).populate('category')
+const getProducts = async (req, res, next) => {
+  let filter = {}
+  if(req.query.categories) {
+    filter = {category: req.query.categories.split(',')}
+  }
+  console.log(filter)
+  const products = await Product.find(filter).populate('category')
   return res.status(200).json({
     products
   })
@@ -88,7 +93,7 @@ const getFeatureProduct = async (req, res, next) => {
 }
 
 module.exports = {
-  getAllProducts,
+  getProducts,
   newProduct,
   getProduct,
   updateProduct,

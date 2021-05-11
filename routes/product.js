@@ -8,7 +8,7 @@ const {
 } = require('../helpers/routerHelper')
 
 router.route('/')
-  .get(productController.getAllProducts)
+  .get(productController.getProducts)
   .post( validateBody(schemas.newProductSchema), productController.newProduct)
 
 router.route('/:productID')  
