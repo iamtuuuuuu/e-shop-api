@@ -2,7 +2,7 @@ const Category = require('../models/Category')
 
 const getAllCategories = async (req, res, next) => {
   const categories = await Category.find({})
-  return res.status(200).json({ categories })
+  return res.status(201).json({ categories })
 }
 
 const newCategory = async (req, res, next) => {

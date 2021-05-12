@@ -69,6 +69,22 @@ const schemas = {
     name: Joi.string().min(6).required(),
     icon: Joi.string(),
     color: Joi.string().regex(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)
+  }),
+
+  userSchema: Joi.object().keys({
+    name: Joi.string().min(6).required(),
+    email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
+    password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required(),
+    authGoogleID: Joi.string(),
+    authFacebookID: Joi.string(),
+    authType: Joi.string(),
+    phone: Joi.string(),
+    isAdmin: Joi.boolean(),
+    street: Joi.string(),
+    apartment: Joi.string(),
+    city: Joi.string(),
+    zip: Joi.string(),
+    country: Joi.string()
   })
 }
 
