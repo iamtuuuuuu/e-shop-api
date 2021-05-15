@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 const validateBody = (schema) => {
   return (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const validatorResult = schema.validate(req.body)
 
     if (validatorResult.error) {
@@ -85,6 +85,12 @@ const schemas = {
     city: Joi.string(),
     zip: Joi.string(),
     country: Joi.string()
+  }),
+
+  // auth
+  authSignInSchema: Joi.object().keys({
+    email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
+    password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required()
   })
 }
 

@@ -10,14 +10,14 @@ passport.use(new LocalStrategy({
     const user = await User.findOne({
       email
     })
-
     if (!user) return done(null, false)
 
     const isCorrectPassword = await user.isValidPassword(password)
 
     if (!isCorrectPassword) return done(null, false)
+    console.log(user)
 
-    done(null, user)
+    return done(null, user)
   } catch (error) {
     done(error, false)
   }

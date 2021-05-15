@@ -13,6 +13,17 @@ const passportConfig = require('../middewares/passport')
 
 router.route('/')
   .get(userController.getUsers)
-  .post( validateBody(schemas.userSchema) , userController.newUser)
+  .post(validateBody(schemas.userSchema), userController.newUser)
 
+router.route('/:userID')
+  .get(validateParam(schemas.idSchema, 'userID'), userController.getUser)
+
+router.route('/signin')
+  .post(validateBody(schemas.authSignInSchema),
+    passport.authenticate(
+      'local',
+      { session: false }
+    ),
+    userController.signIn
+  )
 module.exports = router

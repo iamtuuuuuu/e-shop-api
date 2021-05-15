@@ -59,6 +59,7 @@ const userSchema = new Schema({
   }
 })
 
+// Xu li trc khi luu user
 userSchema.pre('save', async function (next) {
   try {
     // neu login bang google, fb
