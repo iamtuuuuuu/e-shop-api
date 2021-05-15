@@ -1,9 +1,10 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
-const encodedToken = (id) => {
+const encodedToken = (id, isAdmin) => {
   return jwt.sign({
     iss: 'Tu',
     sub: id,
+    isAdmin: isAdmin,
     iat: new Date().getTime(),
     exp: new Date().setDate(new Date().getDate() + 3)
   }, process.env.JWT_SECRET)
@@ -39,7 +40,7 @@ const getUser = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   const user = await User.findOne({_id: req.user._id})
-  const token = encodedToken(user._id)
+  const token = encodedToken(user._id, user.isAdmin)
   res.setHeader('Authorization', 'Bearer ' + token)
 
   return res.status(200).json({user, token})

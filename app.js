@@ -20,8 +20,8 @@ app.use(
   }),
 )
 app.use(express.json())
-// app.use(authJwt)
 
+app.use(authJwt())
 route(app)
 
 
