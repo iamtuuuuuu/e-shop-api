@@ -15,9 +15,6 @@ router.route('/')
   .get(userController.getUsers)
   .post(validateBody(schemas.userSchema), userController.newUser)
 
-router.route('/:userID')
-  .get(validateParam(schemas.idSchema, 'userID'), userController.getUser)
-
 router.route('/signin')
   .post(validateBody(schemas.authSignInSchema),
     passport.authenticate(
@@ -26,4 +23,12 @@ router.route('/signin')
     ),
     userController.signIn
   )
+
+router.route('/secret')  
+  .get(passport.authenticate('jwt', {session: false}), userController.secret)   
+  
+router.route('/:userID')
+  .get(validateParam(schemas.idSchema, 'userID'), userController.getUser)  
+
+  
 module.exports = router

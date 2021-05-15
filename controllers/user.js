@@ -38,17 +38,21 @@ const getUser = async (req, res, next) => {
 }
 
 const signIn = async (req, res, next) => {
-  console.log(process.env.JWT_SECRET)
   const user = await User.findOne({_id: req.user._id})
   const token = encodedToken(user._id)
-  res.setHeader('Authorization', token)
+  res.setHeader('Authorization', 'Bearer ' + token)
 
   return res.status(200).json({user, token})
+}
+
+const secret = async (req, res, next) => {
+  res.status(200).json({resources: true})
 }
 
 module.exports = {
   getUsers,
   newUser,
   getUser,
-  signIn
+  signIn,
+  secret
 }

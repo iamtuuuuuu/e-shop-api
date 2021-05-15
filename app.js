@@ -4,7 +4,7 @@ const logger = require('morgan')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const route = require('./routes')
-
+const authJwt = require('./helpers/authHelper')
 
 require('dotenv/config')
 const port = process.env.PORT || 3001
@@ -20,6 +20,7 @@ app.use(
   }),
 )
 app.use(express.json())
+// app.use(authJwt)
 
 route(app)
 
