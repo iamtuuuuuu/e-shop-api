@@ -45,6 +45,30 @@ const signIn = async (req, res, next) => {
   return res.status(200).json({user, token})
 }
 
+const signUp = async (req, res, next) => {
+  const {name, email, password, phone } = req.value.body
+
+  // check user same email
+  const foundUser = await User.findOne({email})
+  if(foundUser) return res.status(403).json({
+    error: {
+      message: 'Email is already in use'
+    }
+  })
+
+  // Create new user
+  const newUser = new User({name, email, password, phone})
+  await newUser.save()
+
+  // return token
+  const token = encodedToken(newUser._id)
+  res.setHeader('Authorization', token)
+
+  return res.status(201).json({
+    newUser, token
+  })
+}
+
 const secret = async (req, res, next) => {
   res.status(200).json({resources: true})
 }
@@ -54,5 +78,7 @@ module.exports = {
   newUser,
   getUser,
   signIn,
+  signUp,
   secret
+
 }

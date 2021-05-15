@@ -50,7 +50,7 @@ const schemas = {
 
   // validate body
   newProductSchema: Joi.object().keys({
-    name: Joi.string().min(6).required(),
+    name: Joi.string().required(),
     description: Joi.string().min(10).required(),
     richDescription: Joi.string(),
     image: Joi.string(),
@@ -66,19 +66,19 @@ const schemas = {
   }).unknown(),
   
   newCategoryShema: Joi.object().keys({
-    name: Joi.string().min(6).required(),
+    name: Joi.string().required(),
     icon: Joi.string(),
     color: Joi.string().regex(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/)
   }),
 
   userSchema: Joi.object().keys({
-    name: Joi.string().min(6).required(),
+    name: Joi.string().required(),
     email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
     password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required(),
     authGoogleID: Joi.string(),
     authFacebookID: Joi.string(),
     authType: Joi.string(),
-    phone: Joi.string(),
+    phone: Joi.string().required(),
     isAdmin: Joi.boolean(),
     street: Joi.string(),
     apartment: Joi.string(),
@@ -91,7 +91,14 @@ const schemas = {
   authSignInSchema: Joi.object().keys({
     email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
     password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required()
-  })
+  }),
+
+  authSignUpSchema: Joi.object().keys({
+    name: Joi.string().min(2).required(),
+    email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
+    password: Joi.string().required(),
+    phone: Joi.string().required()
+  }),
 }
 
 module.exports = {
