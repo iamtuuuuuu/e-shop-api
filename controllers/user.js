@@ -7,7 +7,7 @@ const encodedToken = (id, isAdmin) => {
     isAdmin: isAdmin,
     iat: new Date().getTime(),
     exp: new Date().setDate(new Date().getDate() + 3)
-  }, process.env.JWT_SECRET)
+  }, process.env.JWT_SECRET, { expiresIn: '2d' })
 }
 
 

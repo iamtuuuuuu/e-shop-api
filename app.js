@@ -15,9 +15,9 @@ app.options('*', cors())
 // midderwares
 app.use(logger('tiny'))
 app.use(
-  express.urlencoded({
-    extended: true,
-  }),
+    express.urlencoded({
+        extended: true,
+    }),
 )
 app.use(express.json())
 
@@ -27,36 +27,36 @@ route(app)
 
 // catch 404 error
 app.use((req, res, next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
 })
 
 // err handler function
 app.use((err, req, res, next) => {
-  const error = app.get('env') === 'development' ? err : {}
-  const status = err.status || 500
+    const error = app.get('env') === 'development' ? err : {}
+    const status = err.status || 500
 
-  // res to clients
-  return res.status(status).json({
-      error: {
-          message: error.message
-      }
-  })
-}) 
+    // res to clients
+    return res.status(status).json({
+        error: {
+            message: error.message
+        }
+    })
+})
 
 mongoose.connect(process.env.CONNECTION_STRING, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
-  .then(() => {
+.then(() => {
     console.log('👍 connect success')
-  })
-  .catch(() => {
+})
+.catch(() => {
     console.error('❌ connect fail')
-  })
+})
 
 app.listen(port, () => {
-  console.log(`server is running http://localhost:${port}`)
+    console.log(`server is running http://localhost:${port}`)
 })
