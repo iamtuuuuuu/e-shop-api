@@ -4,9 +4,7 @@ const encodedToken = (id, isAdmin) => {
   return jwt.sign({
     iss: 'Tu',
     sub: id,
-    isAdmin: isAdmin,
-    iat: new Date().getTime(),
-    exp: new Date().setDate(new Date().getDate() + 3)
+    isAdmin: isAdmin
   }, process.env.JWT_SECRET, { expiresIn: '2d' })
 }
 

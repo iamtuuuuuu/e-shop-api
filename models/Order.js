@@ -11,7 +11,7 @@ const orderSchema = new Schema({
     type: String,
     required: true
   },
-  shippingAdress2: {
+  shippingAddress2: {
     type: String
   },
   city: {
@@ -36,11 +36,13 @@ const orderSchema = new Schema({
     default: 'Pending'
   },
   totalPrice: {
-    type: Number
+    type: Number, 
+    required: true
   }, 
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   dateOrdered: {
     type: Date,

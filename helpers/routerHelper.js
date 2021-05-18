@@ -87,6 +87,25 @@ const schemas = {
     country: Joi.string()
   }),
 
+  orderSchema: Joi.object().keys({
+    orderItems: Joi.array().items(
+      Joi.object({
+        quantity: Joi.number().required(),
+        product: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
+      })
+    ),
+    shippingAddress1: Joi.string().required(),
+    shippingAddress2: Joi.string(),
+    city: Joi.string().required(),
+    zip: Joi.string().required(),
+    country: Joi.string().required(),
+    phone: Joi.string().required(),
+    status: Joi.string(),
+    totalPrice: Joi.number().required(),
+    user: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+    dateOrdered: Joi.date()
+  }),
+
   // auth
   authSignInSchema: Joi.object().keys({
     email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),

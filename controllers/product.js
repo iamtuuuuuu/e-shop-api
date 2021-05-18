@@ -1,6 +1,7 @@
 const Product = require('../models/Product')
 const Category = require('../models/Category')
 
+// /products?categories=60964c61232edc17c9da952b
 const getProducts = async (req, res, next) => {
   let filter = {}
   if(req.query.categories) {
