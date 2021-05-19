@@ -20,6 +20,18 @@ const createOrder = async (req, res, next) => {
 
   const orderItemIdsResolved = await orderItemIds
 
+  // tinh totalPrice
+  const totalPrices = Promise.all(orderItemIdsResolved.map( async (orderItemId) => {
+    const orderItem = await OrderItem.findById(orderItemId).populate('product', 'price')
+    const total = orderItem.product.price * orderItem.quantity
+    return total
+  }) )
+
+  const arrTotalPrice = await totalPrices
+  const totalPriceOfProducts = arrTotalPrice.reduce((a, b) => {
+    return a+b
+  })
+
   const {
     shippingAddress1,
     shippingAddress2,
@@ -28,7 +40,6 @@ const createOrder = async (req, res, next) => {
     country,
     phone,
     status,
-    totalPrice,
     user
   } = req.value.body
 
@@ -41,7 +52,7 @@ const createOrder = async (req, res, next) => {
     country,
     phone,
     status,
-    totalPrice,
+    totalPrice: totalPriceOfProducts,
     user
   })
 
