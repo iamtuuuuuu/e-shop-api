@@ -12,4 +12,6 @@ router.route('/')
 
 router.route('/:orderID')  
   .get(validateParam(schemas.idSchema, 'orderID'), orderController.getOrder)
+  .patch( validateParam(schemas.idSchema, 'orderID'),  orderController.updateOrder)
+  .delete( validateParam(schemas.idSchema, 'orderID'), orderController.deleteOrder)
 module.exports = router

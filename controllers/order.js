@@ -2,7 +2,7 @@ const Order = require('../models/Order')
 const OrderItem = require('../models/OrderItem')
 
 const getAllOrders = async (req, res, next) => {
-  const orders = await Order.find({}).populate('user', 'name phone email').sort({'dateOrdered': -1})
+  const orders = await Order.find({}).populate('user', 'name phone email').sort({ 'dateOrdered': -1 })
 
   return res.status(200).json({ orders })
 }
@@ -22,7 +22,7 @@ const createOrder = async (req, res, next) => {
 
   const {
     shippingAddress1,
-    shippingAdress2,
+    shippingAddress2,
     city,
     zip,
     country,
@@ -35,7 +35,7 @@ const createOrder = async (req, res, next) => {
   const newOrder = new Order({
     orderItems: orderItemIdsResolved,
     shippingAddress1,
-    shippingAdress2,
+    shippingAddress2,
     city,
     zip,
     country,
@@ -51,16 +51,41 @@ const createOrder = async (req, res, next) => {
 }
 
 const getOrder = async (req, res, next) => {
-  const {orderID} = req.value.params
+  const { orderID } = req.value.params
   const order = await Order.findById(orderID)
     .populate('user', 'name phone email')
-    .populate({path: 'orderItems', populate: 'product'})
+    .populate({ path: 'orderItems', populate: 'product' })
+
+  return res.status(200).json({ order })
+}
+
+const updateOrder = async (req, res, next) => {
+  const { orderID } = req.value.params
+  console.log(orderID)
+  const newOrder = req.body
+  const order = await Order.findByIdAndUpdate(
+    orderID,
+    newOrder,
+    { new: true }
+  )
 
   return res.status(200).json({order})
+}
+
+const deleteOrder = async (req, res, next) => {
+  const { orderID } = req.value.params
+
+  const order = await Order.findByIdAndRemove(orderID)
+  order.orderItems.map( async (item) => {
+    await OrderItem.findByIdAndRemove(item)
+  })
+  return res.status(200).json({ success: true, order})
 }
 
 module.exports = {
   getAllOrders,
   createOrder,
-  getOrder
+  getOrder,
+  updateOrder,
+  deleteOrder
 }
