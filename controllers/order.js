@@ -2,7 +2,7 @@ const Order = require('../models/Order')
 const OrderItem = require('../models/OrderItem')
 
 const getAllOrders = async (req, res, next) => {
-  const orders = await Order.find({})
+  const orders = await Order.find({}).populate('user', 'name phone email').sort({'dateOrdered': -1})
 
   return res.status(200).json({ orders })
 }
@@ -50,7 +50,17 @@ const createOrder = async (req, res, next) => {
   return res.status(200).json({ order: newOrder })
 }
 
+const getOrder = async (req, res, next) => {
+  const {orderID} = req.value.params
+  const order = await Order.findById(orderID)
+    .populate('user', 'name phone email')
+    .populate({path: 'orderItems', populate: 'product'})
+
+  return res.status(200).json({order})
+}
+
 module.exports = {
   getAllOrders,
-  createOrder
+  createOrder,
+  getOrder
 }

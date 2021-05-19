@@ -10,4 +10,6 @@ router.route('/')
   .get(orderController.getAllOrders)
   .post( validateBody(schemas.orderSchema), orderController.createOrder)
 
+router.route('/:orderID')  
+  .get(validateParam(schemas.idSchema, 'orderID'), orderController.getOrder)
 module.exports = router
