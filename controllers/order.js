@@ -21,15 +21,15 @@ const createOrder = async (req, res, next) => {
   const orderItemIdsResolved = await orderItemIds
 
   // tinh totalPrice
-  const totalPrices = Promise.all(orderItemIdsResolved.map( async (orderItemId) => {
+  const totalPrices = Promise.all(orderItemIdsResolved.map(async (orderItemId) => {
     const orderItem = await OrderItem.findById(orderItemId).populate('product', 'price')
     const total = orderItem.product.price * orderItem.quantity
     return total
-  }) )
+  }))
 
   const arrTotalPrice = await totalPrices
   const totalPriceOfProducts = arrTotalPrice.reduce((a, b) => {
-    return a+b
+    return a + b
   })
 
   const {
@@ -80,17 +80,39 @@ const updateOrder = async (req, res, next) => {
     { new: true }
   )
 
-  return res.status(200).json({order})
+  return res.status(200).json({ order })
 }
 
 const deleteOrder = async (req, res, next) => {
   const { orderID } = req.value.params
 
   const order = await Order.findByIdAndRemove(orderID)
-  order.orderItems.map( async (item) => {
+  order.orderItems.map(async (item) => {
     await OrderItem.findByIdAndRemove(item)
   })
-  return res.status(200).json({ success: true, order})
+  return res.status(200).json({ success: true, order })
+}
+
+const getTotalSales = async (req, res, next) => {
+  const totalSales = await Order.aggregate([
+    { $group : { _id : null, totalsales: { $sum: '$totalPrice' } } }
+  ])
+
+  return res.status(200).json({totalSales: totalSales.pop().totalsales})
+}
+
+const countOrder = async (req, res, next) => {
+  const countOrder = await Order.countDocuments((count) => count )
+  return res.status(201).json({
+    countOrder
+  })
+}
+
+const getOrderOfUser = async (req, res, next) => {
+  const { userID } = req.value.params
+  const order = await Order.find({user: userID})
+
+  return res.status(200).json({order})
 }
 
 module.exports = {
@@ -98,5 +120,8 @@ module.exports = {
   createOrder,
   getOrder,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  getTotalSales,
+  countOrder,
+  getOrderOfUser
 }
