@@ -1,4 +1,5 @@
 const router = require('express-promise-router')()
+const multer = require('multer')
 
 const productController = require('../controllers/product')
 const {
@@ -7,9 +8,11 @@ const {
   validateBody
 } = require('../helpers/routerHelper')
 
+const upload = require('../helpers/uploadHelper')
+
 router.route('/')
   .get(productController.getProducts)
-  .post( validateBody(schemas.newProductSchema), productController.newProduct)
+  .post(upload.single('image'),  validateBody(schemas.newProductSchema), productController.newProduct)
 
 router.route('/:productID')  
   .get( validateParam(schemas.idSchema, 'productID'), productController.getProduct)

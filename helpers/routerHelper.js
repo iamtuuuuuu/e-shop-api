@@ -6,7 +6,7 @@ const validateBody = (schema) => {
     const validatorResult = schema.validate(req.body)
 
     if (validatorResult.error) {
-      // console.log(validatorResult.error)
+      console.log(validatorResult.error)
       res.status(400).json(validatorResult.error)
     } else {
       if (!req.value) req.value = {}
@@ -63,7 +63,7 @@ const schemas = {
     isFeatured: Joi.boolean(),
     numReviews: Joi.number(),
     dateCreate: Joi.date()
-  }).unknown(),
+  }),
   
   newCategoryShema: Joi.object().keys({
     name: Joi.string().required(),

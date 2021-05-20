@@ -16,11 +16,40 @@ const getProducts = async (req, res, next) => {
 
 const newProduct = async (req, res, next) => {
   //check categoryID
-  const categoryID = req.value.body.category
-  const category = await Category.findById(categoryID)
-  if (!category) return res.status(400).json({ message: 'Invalid category' })
+  const {
+    name, 
+    description,
+    richDescription,
+    brand,
+    price,
+    category,
+    countInStock,
+    rating,
+    numReviews,
+    isFeatured
+  } = req.value.body
+  console.log(req.value.body)
+  
+  const category1 = await Category.findById(category)
+  if (!category1) return res.status(400).json({ message: 'Invalid category' })
 
-  const newProduct = new Product(req.value.body)
+  const fileName = req.file.filename
+  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+
+  
+  const newProduct = new Product({
+    name, 
+    description,
+    richDescription,
+    image: `${basePath}${fileName}`,
+    brand,
+    price,
+    category,
+    countInStock,
+    rating,
+    numReviews,
+    isFeatured
+  })
   await newProduct.save()
 
   return res.status(201).json({

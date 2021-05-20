@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const route = require('./routes')
 const authJwt = require('./helpers/authHelper')
+const path = require('path')
 
 require('dotenv/config')
 const port = process.env.PORT || 3001
@@ -14,6 +15,7 @@ app.options('*', cors())
 
 // midderwares
 app.use(logger('tiny'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(
     express.urlencoded({
         extended: true,
@@ -21,7 +23,7 @@ app.use(
 )
 app.use(express.json())
 
-app.use(authJwt())
+// app.use(authJwt())
 route(app)
 
 
