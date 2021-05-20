@@ -15,7 +15,6 @@ app.options('*', cors())
 
 // midderwares
 app.use(logger('tiny'))
-app.use(express.static(path.join(__dirname, 'public')))
 app.use(
     express.urlencoded({
         extended: true,
@@ -23,7 +22,9 @@ app.use(
 )
 app.use(express.json())
 
-// app.use(authJwt())
+app.use(authJwt())
+app.use('/public/uploads',express.static(__dirname + '/public/uploads'))
+
 route(app)
 
 

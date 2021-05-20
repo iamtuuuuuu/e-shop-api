@@ -122,6 +122,30 @@ const getFeatureProduct = async (req, res, next) => {
   })
 }
 
+const updateProductImages = async (req, res, next) => {
+  const {productID} = req.value.params
+  const files = req.files
+  let imagesPaths = []
+  const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+  console.log(files)
+
+  if(files) {
+    files.map(file => {
+      imagesPaths.push(`${basePath}${file.filename}`)
+    })
+  }
+console.log(imagesPaths)
+  const product = await Product.findByIdAndUpdate(
+    productID, 
+    {
+      images: imagesPaths
+    },
+    { new: true}
+  )
+
+  return res.status(201).json({product})
+}
+
 module.exports = {
   getProducts,
   newProduct,
@@ -129,5 +153,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   countProduct,
-  getFeatureProduct
+  getFeatureProduct,
+  updateProductImages
 }

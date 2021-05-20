@@ -19,9 +19,13 @@ router.route('/:productID')
   .put( validateParam(schemas.idSchema, 'productID'), validateBody(schemas.newProductSchema), productController.updateProduct)
   .delete( validateParam(schemas.idSchema, 'productID'), productController.deleteProduct)
 
+router.route('/gallery-image/:productID')  
+  .patch( validateParam(schemas.idSchema, 'productID'), upload.array('images'), productController.updateProductImages)
+
 router.route('/get/count')
   .get(productController.countProduct)
 
 router.route('/get/featured/:count')  
   .get( validateParam(schemas.number, 'count') , productController.getFeatureProduct)
+
 module.exports = router  
