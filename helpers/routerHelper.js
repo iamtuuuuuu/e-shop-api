@@ -74,11 +74,27 @@ const schemas = {
   userSchema: Joi.object().keys({
     name: Joi.string().required(),
     email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
-    password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required(),
+    password: Joi.string().required(),
     authGoogleID: Joi.string(),
     authFacebookID: Joi.string(),
     authType: Joi.string(),
     phone: Joi.string().required(),
+    isAdmin: Joi.boolean(),
+    street: Joi.string(),
+    apartment: Joi.string(),
+    city: Joi.string(),
+    zip: Joi.string(),
+    country: Joi.string()
+  }),
+
+  userSchemaOption: Joi.object().keys({
+    name: Joi.string().required(),
+    email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
+    password: Joi.string(),
+    authGoogleID: Joi.string(),
+    authFacebookID: Joi.string(),
+    authType: Joi.string(),
+    phone: Joi.string(),
     isAdmin: Joi.boolean(),
     street: Joi.string(),
     apartment: Joi.string(),
@@ -94,14 +110,10 @@ const schemas = {
         product: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
       })
     ),
-    shippingAddress1: Joi.string().required(),
-    shippingAddress2: Joi.string(),
-    city: Joi.string().required(),
-    zip: Joi.string().required(),
-    country: Joi.string().required(),
+    shippingAddress: Joi.string().required(),    
     phone: Joi.string().required(),
     status: Joi.string(),
-    totalPrice: Joi.number().required(),
+    totalPrice: Joi.number(),
     user: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
     dateOrdered: Joi.date()
   }),
@@ -109,7 +121,7 @@ const schemas = {
   // auth
   authSignInSchema: Joi.object().keys({
     email: Joi.string().regex(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).required(),
-    password: Joi.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).required()
+    password: Joi.string().required()
   }),
 
   authSignUpSchema: Joi.object().keys({

@@ -31,7 +31,11 @@ router.route('/secret')
   .get(passport.authenticate('jwt', {session: false}), userController.secret)   
   
 router.route('/:userID')
+  .patch(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchemaOption), userController.updateUser)
+  .delete(validateParam(schemas.idSchema, 'userID'), userController.deleteUser)
+router.route('/profile/:userID')
   .get(validateParam(schemas.idSchema, 'userID'), userController.getUser)  
+  .patch(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchema), userController.updateUserProfile)
 
 
 module.exports = router

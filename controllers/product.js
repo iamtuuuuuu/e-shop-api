@@ -10,7 +10,7 @@ const getProducts = async (req, res, next) => {
   console.log(filter)
   const products = await Product.find(filter).populate('category')
   return res.status(200).json({
-    products
+    data: products
   })
 }
 
@@ -64,7 +64,7 @@ const getProduct = async (req, res, next) => {
   } = req.value.params
   const product = await (await Product.findById(productID)).populate('category')
   return res.status(201).json({
-    product
+    data: product
   })
 }
 
@@ -84,7 +84,7 @@ const updateProduct = async (req, res, next) => {
   )
 
   return res.status(201).json({
-    product
+    data: product
   })
 }
 
@@ -103,7 +103,7 @@ const countProduct = async (req, res, next) => {
   const productCount = await Product.countDocuments((count) => count)
 
   return res.status(201).json({
-    productCount
+    data: productCount
   })
 }
 
@@ -118,7 +118,7 @@ const getFeatureProduct = async (req, res, next) => {
   }
 
   return res.status(201).json({
-    featureProducts
+    data: featureProducts
   })
 }
 

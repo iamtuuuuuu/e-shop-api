@@ -7,22 +7,7 @@ const orderSchema = new Schema({
     ref: 'OrderItem',
     required: true
   }],
-  shippingAddress1: {
-    type: String,
-    required: true
-  },
-  shippingAddress2: {
-    type: String
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  zip: {
-    type: String,
-    required: true    
-  },
-  country: {
+  shippingAddress: {
     type: String,
     required: true
   },
@@ -37,7 +22,6 @@ const orderSchema = new Schema({
   },
   totalPrice: {
     type: Number, 
-    required: true
   }, 
   user: {
     type: Schema.Types.ObjectId,

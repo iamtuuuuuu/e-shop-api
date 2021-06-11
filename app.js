@@ -22,7 +22,7 @@ app.use(
 )
 app.use(express.json())
 
-app.use(authJwt())
+// app.use(authJwt())
 app.use('/public/uploads',express.static(__dirname + '/public/uploads'))
 
 route(app)

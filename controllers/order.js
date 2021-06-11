@@ -4,7 +4,7 @@ const OrderItem = require('../models/OrderItem')
 const getAllOrders = async (req, res, next) => {
   const orders = await Order.find({}).populate('user', 'name phone email').sort({ 'dateOrdered': -1 })
 
-  return res.status(200).json({ orders })
+  return res.status(200).json({ data: orders })
 }
 
 const createOrder = async (req, res, next) => {
@@ -33,11 +33,7 @@ const createOrder = async (req, res, next) => {
   })
 
   const {
-    shippingAddress1,
-    shippingAddress2,
-    city,
-    zip,
-    country,
+    shippingAddress,
     phone,
     status,
     user
@@ -45,11 +41,7 @@ const createOrder = async (req, res, next) => {
 
   const newOrder = new Order({
     orderItems: orderItemIdsResolved,
-    shippingAddress1,
-    shippingAddress2,
-    city,
-    zip,
-    country,
+    shippingAddress,
     phone,
     status,
     totalPrice: totalPriceOfProducts,
@@ -58,7 +50,7 @@ const createOrder = async (req, res, next) => {
 
   await newOrder.save()
 
-  return res.status(200).json({ order: newOrder })
+  return res.status(200).json({ data: newOrder })
 }
 
 const getOrder = async (req, res, next) => {
@@ -67,20 +59,18 @@ const getOrder = async (req, res, next) => {
     .populate('user', 'name phone email')
     .populate({ path: 'orderItems', populate: 'product' })
 
-  return res.status(200).json({ order })
+  return res.status(200).json({ data: order })
 }
 
 const updateOrder = async (req, res, next) => {
   const { orderID } = req.value.params
-  console.log(orderID)
   const newOrder = req.body
   const order = await Order.findByIdAndUpdate(
     orderID,
     newOrder,
     { new: true }
   )
-
-  return res.status(200).json({ order })
+  return res.status(200).json({ data: order })
 }
 
 const deleteOrder = async (req, res, next) => {
@@ -104,7 +94,7 @@ const getTotalSales = async (req, res, next) => {
 const countOrder = async (req, res, next) => {
   const countOrder = await Order.countDocuments((count) => count )
   return res.status(201).json({
-    countOrder
+    data: countOrder
   })
 }
 
@@ -112,7 +102,7 @@ const getOrderOfUser = async (req, res, next) => {
   const { userID } = req.value.params
   const order = await Order.find({user: userID})
 
-  return res.status(200).json({order})
+  return res.status(200).json({data: order})
 }
 
 module.exports = {

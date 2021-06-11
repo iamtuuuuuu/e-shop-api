@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -88,5 +89,19 @@ userSchema.methods.isValidPassword = async function (newPassword) {
     throw new Error(error)
   }
 }
+
+// Generate JWT with user id
+userSchema.methods.generateToken = function() {
+    return jwt.sign({ id: this._id, isAdmin: this.isAdmin }, process.env.JWT_SECRET, { expiresIn: '2d' })
+}
+
+if (!userSchema.options.toObject) userSchema.options.toObject = {}
+
+userSchema.options.toObject.transform = function(doc, ret) {
+    delete ret.password
+    ret.token = doc.generateToken()
+    return ret
+}
+
 
 module.exports = mongoose.model('User', userSchema)
